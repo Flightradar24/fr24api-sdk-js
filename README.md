@@ -1,4 +1,4 @@
-# Flightradar24 Node SDK (fr24api-sdk-js)
+# Flightradar24 Node SDK (fr24sdk)
 
 Node.js SDK for the [Flightradar24 API](https://fr24api.flightradar24.com).
 

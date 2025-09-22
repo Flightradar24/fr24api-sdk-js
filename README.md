@@ -1,6 +1,6 @@
-# Flightradar24 Node SDK (fr24sdk)
+# Flightradar24 Node SDK (fr24api-sdk-js)
 
-Node SDK for the [Flightradar24 API](https://fr24api.flightradar24.com).
+Node.js SDK for the [Flightradar24 API](https://fr24api.flightradar24.com).
 
 ## Features
 
@@ -8,14 +8,13 @@ Node SDK for the [Flightradar24 API](https://fr24api.flightradar24.com).
 - Intuitive client interface: `client.airports.getFull("WAW")`
 - Robust error handling with custom exceptions.
 - Lightweight input validation for common parameters.
+- Returns plain JavaScript objects and classes for easy data access.
 
 ## Installation
 
 ### Release Version (Recommended for Users)
 
 Once the SDK is deployed to NPM, you can install it using:
-
-**Using NPM:**
 
 ```bash
 npm install flightradar24/api-sdk
@@ -32,40 +31,45 @@ cd fr24api-sdk-node
 
 ## SDK Usage Guide
 
-This guide provides a comprehensive overview of how to use the `fr24sdk` to interact with the Flightradar24 API.
+This guide provides a comprehensive overview of how to use the SDK to interact with the Flightradar24 API.
 
-### 1. Client initialization
+### 1. Client Initialization
 
-The `Client` is your main entry point to the API.
+The `Client` class is your main entry point to the API.
 
 **Using environment variable (recommended):**
 
-Copy `.env.example` to `.env`. Edit .env and save your API token as `FR24_API_TOKEN`
+Create a `.env` file in your project root and add your API token:
+
+```
+FR24_API_TOKEN=your_api_token_here
+```
 
 Then, initialize the client:
 
 ```js
-const Client = require('./src/fr24sdk/client');
+require('dotenv').config();
+const Client = require('./src/client');
 
 const client = new Client({
   apiToken: process.env.FR24_API_TOKEN,
-  apiVersion: 'v1',
+  apiVersion: 'v1', // optional, defaults to 'v1'
 });
 ```
 
 ### 2. Accessing API Resources
 
-The client provides access to different API resources as attributes. For example:
+The client provides access to different API resources as properties. For example:
 
 - `client.airlines`: Fetch airline details.
 - `client.airports`: Fetch airport details.
 - `client.live`: Get live flight data, including flights within specific geographical bounds.
 - `client.historic`: Query historic flight information.
-- `client.flight_summary`: Retrieve summaries for specific flights.
-- `client.flight_tracks`: Access flight track data.
+- `client.flightSummary`: Retrieve summaries for specific flights.
+- `client.flightTracks`: Access flight track data.
 - `client.usage`: Check your API usage statistics.
 
-Each resource object then has methods to fetch data related to that resource.
+Each resource object has methods to fetch data related to that resource.
 
 ### 3. Resource Examples
 
@@ -74,66 +78,93 @@ Each resource object then has methods to fetch data related to that resource.
 This example demonstrates fetching detailed information for an airport (e.g., Warsaw Chopin Airport - WAW) and accessing its attributes.
 
 ```js
-const Client = require('./src/fr24sdk/client');
+require('dotenv').config();
+const Client = require('./src/client');
 
 const client = new Client({
   apiToken: process.env.FR24_API_TOKEN,
   apiVersion: 'v1',
 });
 
-const airport = await client.airports.getFull('WAW');
-console.log('Airport (WAW) Full:', airport);
+(async () => {
+  try {
+    const airport = await client.airports.getFull('WAW');
+    console.log('Airport (WAW) Full:', airport);
+    // Access properties, e.g.:
+    // console.log(airport.name);
+    // console.log(airport.timezone.name);
+  } catch (err) {
+    console.error(err);
+  } finally {
+    client.close();
+  }
+})();
 ```
+
+**Other Examples**
+
+See [examples.js](examples.js) for more usage patterns, including:
+
+- Fetching flight summaries
+- Fetching airline details
+- Getting live and historic flight positions
+- Fetching flight tracks
+- Checking API usage
 
 ### 4. Handling Responses
 
-API methods return Python objects (often dataclasses or TypedDicts) that represent the JSON response from the API. You can access data using dot notation, as shown in the examples.
+API methods return JavaScript objects or class instances that represent the JSON response from the API. You can access data using dot notation, for example:
 
-```python
-# Example with AirportFull object
-# waw_full = client.airports.get_full("WAW")
-# print(waw_full.name)
-# print(waw_full.timezone_name)
+```js
+const airport = await client.airports.getFull('JFK');
+console.log(airport.name); // Airport name
+console.log(airport.timezone.name); // Timezone name
 ```
+
+Some endpoints return arrays or response wrapper classes (e.g., `UsageLogSummaryResponse`, `FlightTracksResponse`).
 
 ### 5. Error Handling
 
 The SDK uses custom exceptions to indicate errors. The base exception is `Fr24SdkError`. More specific errors like `ApiError`, `AuthenticationError`, `RateLimitError`, etc., inherit from it.
 
-```python
-import os
-from fr24sdk.client import Client
-from fr24sdk.exceptions import ApiError, AuthenticationError, Fr24SdkError # Import relevant exceptions
+Example error handling:
 
-# Assumes FR24_API_TOKEN is set, or pass it to Client()
-try:
-    with Client() as client:
-        # Example: Intentionally try to get a non-existent airport
-        airport = client.airports.get_full("INVALID_IATA")
-        if airport:
-            print(airport.name)
+```js
+const Client = require('./src/client');
+const { ApiError, AuthenticationError, Fr24SdkError } = require('./src/exceptions');
 
-except AuthenticationError:
-    print("Authentication failed. Please check your API token.")
-except ApiError as e:
-    print(f"API Error occurred: Status {e.status}, Message: {e.message}")
-    print(f"Request URL: {e.request_url}")
-    if e.raw_body:
-        print(f"Raw API response body: {e.raw_body}")
-except Fr24SdkError as e:
-    print(f"An SDK-specific error occurred: {e}")
-except Exception as e:
-    print(f"An unexpected error occurred: {e}")
+const client = new Client({ apiToken: process.env.FR24_API_TOKEN });
+
+(async () => {
+  try {
+    // Example: Intentionally try to get a non-existent airport
+    const airport = await client.airports.getFull('INVALID_IATA');
+    if (airport) {
+      console.log(airport.name);
+    }
+  } catch (err) {
+    if (err instanceof AuthenticationError) {
+      console.error('Authentication failed. Please check your API token.');
+    } else if (err instanceof ApiError) {
+      console.error('API Error occurred:', err.getMessage());
+      console.error('Details:', err.getDetails());
+    } else if (err instanceof Fr24SdkError) {
+      console.error('An SDK-specific error occurred:', err.message);
+    } else {
+      console.error('An unexpected error occurred:', err);
+    }
+  } finally {
+    client.close();
+  }
+})();
 ```
 
 ### 6. Closing the Client
 
-If you are not using the client as a context manager (`with Client() as client:`), you should explicitly close it to release resources:
+Call `client.close()` when you are done to release resources (no-op for HTTP transport, but included for future compatibility):
 
-```python
-client = Client()
-# ... use client ...
-client.close()
+```js
+client.close();
 ```
 
 ## Contributing

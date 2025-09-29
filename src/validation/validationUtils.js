@@ -88,7 +88,7 @@ class ValidationUtils {
     if (![lower, upper].every((num) => Number.isFinite(num) && Number.isInteger(num))) {
       return false;
     }
-    const inRange = (num) => num >= 0 && num <= 150000;
+    const inRange = (num) => num >= -2000 && num <= 150000;
     return inRange(lower) && inRange(upper) && lower <= upper;
   }
 }

@@ -164,7 +164,7 @@ class FlightParamsValidator {
         ranges.forEach((range) => {
           if (!ValidationUtils.isAltitudeRange(range)) {
             errors.push(
-              `'altitude_ranges' contains invalid range: "${range}". Expected format is min-max with values between 0 and 150000.`
+              `'altitude_ranges' contains invalid range: "${range}". Expected format is min-max with values between -2000 and 150000.`
             );
           }
         });

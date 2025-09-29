@@ -49,14 +49,56 @@ class FlightParamsValidator {
       errors.push("'bounds' is required when no other filters are specified.");
     }
 
-    const listField = (key, value, maxLen, validatorFn, name) => {
-      if (typeof value !== 'string' || value.length > maxLen) {
-        errors.push(`'${key}' must be a string up to ${maxLen} chars.`);
-        return;
+    const normalizeListParam = (key, value, { maxLen, allowArray = false, emptyMessage }) => {
+      const requireNonEmpty = (items) => {
+        if (items.length === 0) {
+          errors.push(emptyMessage ?? `'${key}' must contain at least one value.`);
+          return null;
+        }
+        return items;
+      };
+
+      if (typeof value === 'string') {
+        if (value.length > maxLen) {
+          errors.push(`'${key}' must be a string up to ${maxLen} chars.`);
+          return null;
+        }
+        return requireNonEmpty(splitList(value));
       }
-      const items = splitList(value);
-      if (items.length === 0) {
-        errors.push(`'${key}' must contain at least one ${name}.`);
+
+      if (allowArray && Array.isArray(value)) {
+        if (value.length === 0) {
+          errors.push(emptyMessage ?? `'${key}' must contain at least one value.`);
+          return null;
+        }
+        if (value.some((item) => typeof item !== 'string')) {
+          errors.push(`'${key}' array items must be strings.`);
+          return null;
+        }
+        const trimmed = value.map((item) => item.trim()).filter(Boolean);
+        if (maxLen != null && trimmed.some((item) => item.length > maxLen)) {
+          errors.push(`'${key}' array items must be strings up to ${maxLen} chars.`);
+          return null;
+        }
+        return requireNonEmpty(trimmed);
+      }
+
+      errors.push(
+        allowArray
+          ? `'${key}' must be provided as a string up to ${maxLen} chars or an array of strings.`
+          : `'${key}' must be a string up to ${maxLen} chars.`
+      );
+      return null;
+    };
+
+    const listField = (key, value, maxLen, validatorFn, name, options = {}) => {
+      const items = normalizeListParam(key, value, {
+        maxLen,
+        allowArray: options.allowArray ?? false,
+        emptyMessage: `'${key}' must contain at least one ${name}.`,
+      });
+      if (!items) {
+        return;
       }
       items.forEach((item) => {
         if (!validatorFn.call(ValidationUtils, item)) {
@@ -113,13 +155,12 @@ class FlightParamsValidator {
 
     // altitude_ranges
     if (altitude_ranges != null) {
-      if (typeof altitude_ranges !== 'string' || altitude_ranges.length > 200) {
-        errors.push("'altitude_ranges' must be a string up to 200 chars.");
-      } else {
-        const ranges = splitList(altitude_ranges);
-        if (ranges.length === 0) {
-          errors.push("'altitude_ranges' must contain at least one range.");
-        }
+      const ranges = normalizeListParam('altitude_ranges', altitude_ranges, {
+        maxLen: 200,
+        allowArray: true,
+        emptyMessage: "'altitude_ranges' must contain at least one range.",
+      });
+      if (ranges) {
         ranges.forEach((range) => {
           if (!ValidationUtils.isAltitudeRange(range)) {
             errors.push(

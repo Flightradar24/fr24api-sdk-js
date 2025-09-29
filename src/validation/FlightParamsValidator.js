@@ -109,24 +109,24 @@ class FlightParamsValidator {
 
     // flights (IATA flight number)
     if (flights != null) {
-      listField('flights', flights, 200, ValidationUtils.isIataFlightNumber, 'IATA flight number');
+      listField('flights', flights, 200, ValidationUtils.isIataFlightNumber, 'IATA flight number', { allowArray: true });
     }
 
     // callsigns
     if (callsigns != null) {
-      listField('callsigns', callsigns, 200, ValidationUtils.isCallsign, 'callsign');
+      listField('callsigns', callsigns, 200, ValidationUtils.isCallsign, 'callsign', { allowArray: true });
     }
 
     // registrations
     if (registrations != null) {
-      listField('registrations', registrations, 200, ValidationUtils.isRegistration, 'registration');
+      listField('registrations', registrations, 200, ValidationUtils.isRegistration, 'registration', { allowArray: true });
     }
 
     // operating_as & painted_as
     ['operating_as', 'painted_as'].forEach((key) => {
       const val = params[key];
       if (val != null) {
-        listField(key, val, 200, ValidationUtils.isAirlineIcao, 'airline ICAO code');
+        listField(key, val, 200, ValidationUtils.isAirlineIcao, 'airline ICAO code', { allowArray: true });
       }
     });
 
@@ -141,7 +141,7 @@ class FlightParamsValidator {
 
     // routes (comma-separated)
     if (routes != null) {
-      listField('routes', routes, 200, ValidationUtils.isRoute, 'route');
+      listField('routes', routes, 200, ValidationUtils.isRoute, 'route', { allowArray: true });
     }
 
     // aircraft
@@ -173,7 +173,7 @@ class FlightParamsValidator {
 
     // squawks
     if (squawks != null) {
-      listField('squawks', squawks, 200, ValidationUtils.isSquawk, 'squawk code');
+      listField('squawks', squawks, 200, ValidationUtils.isSquawk, 'squawk code', { allowArray: true });
     }
 
     // categories

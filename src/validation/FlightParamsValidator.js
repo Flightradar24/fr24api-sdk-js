@@ -116,10 +116,17 @@ class FlightParamsValidator {
       if (typeof altitude_ranges !== 'string' || altitude_ranges.length > 200) {
         errors.push("'altitude_ranges' must be a string up to 200 chars.");
       } else {
-        const num = Number(altitude_ranges);
-        if (!Number.isFinite(num) || num < -2000 || num > 150000) {
-          errors.push("'altitude_ranges' must be a number between -2000 and 150000.");
+        const ranges = splitList(altitude_ranges);
+        if (ranges.length === 0) {
+          errors.push("'altitude_ranges' must contain at least one range.");
         }
+        ranges.forEach((range) => {
+          if (!ValidationUtils.isAltitudeRange(range)) {
+            errors.push(
+              `'altitude_ranges' contains invalid range: "${range}". Expected format is min-max with values between 0 and 150000.`
+            );
+          }
+        });
       }
     }
 

@@ -74,6 +74,23 @@ class ValidationUtils {
   static isDataSource(val) {
     return this.test(this.DATA_SOURCE_REGEXP, val);
   }
+
+  static isAltitudeRange(val) {
+    if (typeof val !== 'string') {
+      return false;
+    }
+    const match = val.match(/^(\d+)-(\d+)$/);
+    if (!match) {
+      return false;
+    }
+    const lower = Number(match[1]);
+    const upper = Number(match[2]);
+    if (![lower, upper].every((num) => Number.isFinite(num) && Number.isInteger(num))) {
+      return false;
+    }
+    const inRange = (num) => num >= 0 && num <= 150000;
+    return inRange(lower) && inRange(upper) && lower <= upper;
+  }
 }
 
 module.exports = ValidationUtils;

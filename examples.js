@@ -1,7 +1,7 @@
 // demo.js
 
 require('dotenv').config();
-const Client = require('./src/fr24sdk/client');
+const Client = require('./src/client');
 
 // Make sure to put FR24_API_TOKEN in your .env file.
 const client = new Client({

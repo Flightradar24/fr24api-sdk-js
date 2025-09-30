@@ -1,7 +1,7 @@
 // demo.js
 
 require('dotenv').config();
-const Client = require('./src/fr24sdk/client');
+const Client = require('./src/client');
 
 // Make sure to put FR24_API_TOKEN in your .env file.
 const client = new Client({
@@ -23,8 +23,12 @@ const client = new Client({
     const live = await client.live.getFull({ bounds: '45.6999,23.9,-103.11,-71.7899', limit: 2 });
     console.log('Live Positions:', live);
 
-    const historic = await client.historic.getLight({ callsigns: 'SAS38T', timestamp: '1702383145', limit: 2 });
+    const historic = await client.historic.getLight({ callsigns: 'WJA329,WSW102', timestamp: '1702383145', limit: 2 });
     console.log('Historic Positions (May 1, 2025):', historic);
+
+    // You can also pass arrays instead of comma-separated strings:
+    const historic2 = await client.historic.getLight({ callsigns: ['WJA329', 'WSW102'], timestamp: '1702383145', limit: 2 });
+    console.log('Historic Positions (May 1, 2025):', historic2);
 
     const tracks = await client.flightTracks.get('34242a02');
     console.log('Flight Tracks (34242a02):', tracks);

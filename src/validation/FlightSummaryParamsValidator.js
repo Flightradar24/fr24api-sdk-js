@@ -1,4 +1,5 @@
 const ValidationUtils = require('./validationUtils');
+const { listField } = require('../helpers/params');
 
 class FlightSummaryValidator {
   static validate(params = {}) {
@@ -18,11 +19,7 @@ class FlightSummaryValidator {
       sort,
       limit,
     } = params;
-    const splitList = (str) =>
-      str
-        .split(',')
-        .map((s) => s.trim())
-        .filter(Boolean);
+
     if (!flight_ids && !flight_datetime_from && !flight_datetime_to) {
       errors.push("Either 'flight_ids' or both 'flight_datetime_from' and 'flight_datetime_to' must be provided.");
     }
@@ -43,41 +40,19 @@ class FlightSummaryValidator {
         }
       }
     }
-    if (flight_ids != null) {
-      if (!(typeof flight_ids === 'string' || Number.isInteger(flight_ids))) {
-        errors.push("'flight_ids' must be a string or integer.");
-      }
-    }
-    const listField = (key, value, maxLen, validatorFn) => {
-      if (typeof value !== 'string' || value.length > maxLen) {
-        errors.push(`'${key}' must be a string up to ${maxLen} chars.`);
-        return;
-      }
-      const items = splitList(value);
-      if (items.length === 0) {
-        errors.push(`'${key}' must contain at least one ${key}.`);
-      }
-      items.forEach((item) => {
-        if (!validatorFn.call(ValidationUtils, item)) {
-          errors.push(`'${key}' contains invalid item: "${item}".`);
-        }
-      });
-    };
-    if (flights != null) listField('flights', flights, 200, ValidationUtils.isIataFlightNumber);
-    if (callsigns != null) listField('callsigns', callsigns, 200, ValidationUtils.isCallsign);
-    if (registrations != null) listField('registrations', registrations, 200, ValidationUtils.isRegistration);
+    if (flight_ids != null) listField('flight ids', flight_ids, null, 200, null, 'Flight ID', { allowArray: true });
+    if (flights != null) listField('flights', flights, null, 200, ValidationUtils.isIataFlightNumber, 'Flight', { allowArray: true });
+    if (callsigns != null) listField('callsigns', callsigns, nul, 200, ValidationUtils.isCallsign, 'Callsign', { allowArray: true });
+    if (registrations != null)
+      listField('registrations', registrations, null, 200, ValidationUtils.isRegistration, 'registration', { allowArray: true });
     ['operating_as', 'painted_as'].forEach((key) => {
       const val = params[key];
-      if (val != null) listField(key, val, 200, ValidationUtils.isAirlineIcao);
+      if (val != null) listField(key, val, null, 200, ValidationUtils.isAirlineIcao, 'airline ICAO code', { allowArray: true });
     });
-    if (airports != null) listField('airports', airports, 200, ValidationUtils.isAirportParam);
-    if (routes != null) listField('routes', routes, 200, ValidationUtils.isRoute);
+    if (airports != null) listField('airports', airports, 0, 200, ValidationUtils.isAirportParam, 'airport', { allowArray: true });
+    if (routes != null) listField('routes', routes, 0, 200, ValidationUtils.isRoute, 'route', { allowArray: true });
     if (aircraft != null) {
-      if (typeof aircraft !== 'string' || aircraft.length > 200) {
-        errors.push("'aircraft' must be a string up to 200 chars.");
-      } else if (splitList(aircraft).length === 0) {
-        errors.push("'aircraft' must contain at least one entry.");
-      }
+      listField('aircraft', aircraft, 0, 200, ValidationUtils.isRoute, 'aircraft', { allowArray: true });
     }
     if (sort != null) {
       if (typeof sort !== 'string' || !['asc', 'desc'].includes(sort.toLowerCase())) {

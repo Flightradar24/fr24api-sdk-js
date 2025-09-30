@@ -1,4 +1,5 @@
 const ValidationUtils = require('./validationUtils');
+const { normalizeListParam, listField } = require('../helpers/params');
 
 class FlightParamsValidator {
   static validate(params = {}) {
@@ -22,12 +23,6 @@ class FlightParamsValidator {
       limit,
     } = params;
 
-    const splitList = (str) =>
-      str
-        .split(',')
-        .map((s) => s.trim())
-        .filter(Boolean);
-
     const anyFilter = [
       flights,
       callsigns,
@@ -49,106 +44,85 @@ class FlightParamsValidator {
       errors.push("'bounds' is required when no other filters are specified.");
     }
 
-    const listField = (key, value, maxLen, validatorFn, name) => {
-      if (typeof value !== 'string' || value.length > maxLen) {
-        errors.push(`'${key}' must be a string up to ${maxLen} chars.`);
-        return;
-      }
-      const items = splitList(value);
-      if (items.length === 0) {
-        errors.push(`'${key}' must contain at least one ${name}.`);
-      }
-      items.forEach((item) => {
-        if (!validatorFn.call(ValidationUtils, item)) {
-          errors.push(`'${key}' contains invalid ${name}: "${item}".`);
-        }
-      });
-    };
-
     // flights (IATA flight number)
     if (flights != null) {
-      listField('flights', flights, 200, ValidationUtils.isIataFlightNumber, 'IATA flight number');
+      listField('flights', flights, null, 200, ValidationUtils.isIataFlightNumber, 'IATA flight number', { allowArray: true });
     }
 
     // callsigns
     if (callsigns != null) {
-      listField('callsigns', callsigns, 200, ValidationUtils.isCallsign, 'callsign');
+      listField('callsigns', callsigns, null, 200, ValidationUtils.isCallsign, 'callsign', { allowArray: true });
     }
 
     // registrations
     if (registrations != null) {
-      listField('registrations', registrations, 200, ValidationUtils.isRegistration, 'registration');
+      listField('registrations', registrations, null, 200, ValidationUtils.isRegistration, 'registration', { allowArray: true });
     }
 
     // operating_as & painted_as
     ['operating_as', 'painted_as'].forEach((key) => {
       const val = params[key];
       if (val != null) {
-        listField(key, val, 200, ValidationUtils.isAirlineIcao, 'airline ICAO code');
+        listField(key, val, null, 200, ValidationUtils.isAirlineIcao, 'airline ICAO code', { allowArray: true });
       }
     });
 
     // airports
     if (airports != null) {
-      if (typeof airports !== 'string' || airports.length > 200) {
-        errors.push("'airports' must be a string up to 200 chars.");
-      } else if (!ValidationUtils.isAirportParam(airports)) {
-        errors.push("'airports' does not match required format.");
-      }
+      listField('airports', airports, 0, 200, ValidationUtils.isAirportParam, 'airport', { allowArray: true });
     }
 
     // routes (comma-separated)
     if (routes != null) {
-      listField('routes', routes, 200, ValidationUtils.isRoute, 'route');
+      listField('routes', routes, 0, 200, ValidationUtils.isRoute, 'route', { allowArray: true });
     }
 
     // aircraft
     if (aircraft != null) {
-      if (typeof aircraft !== 'string' || aircraft.length > 200) {
-        errors.push("'aircraft' must be a string up to 200 chars.");
-      } else if (splitList(aircraft).length === 0) {
-        errors.push("'aircraft' must contain at least one entry.");
-      }
+      listField('aircraft', aircraft, 0, 200, ValidationUtils.isRoute, 'aircraft', { allowArray: true });
     }
 
     // altitude_ranges
     if (altitude_ranges != null) {
-      if (typeof altitude_ranges !== 'string' || altitude_ranges.length > 200) {
-        errors.push("'altitude_ranges' must be a string up to 200 chars.");
-      } else {
-        const num = Number(altitude_ranges);
-        if (!Number.isFinite(num) || num < -2000 || num > 150000) {
-          errors.push("'altitude_ranges' must be a number between -2000 and 150000.");
-        }
+      const ranges = normalizeListParam('altitude_ranges', altitude_ranges, {
+        maxLen: 200,
+        allowArray: true,
+        emptyMessage: "'altitude_ranges' must contain at least one range.",
+      });
+      if (ranges) {
+        ranges.forEach((range) => {
+          if (!ValidationUtils.isAltitudeRange(range)) {
+            errors.push(
+              `'altitude_ranges' contains invalid range: "${range}". Expected format is min-max with values between -2000 and 150000.`
+            );
+          }
+        });
       }
     }
 
     // squawks
     if (squawks != null) {
-      listField('squawks', squawks, 200, ValidationUtils.isSquawk, 'squawk code');
+      listField('squawks', squawks, 0, 200, ValidationUtils.isSquawk, 'squawk code', { allowArray: true });
     }
 
     // categories
     if (categories != null) {
-      if (typeof categories !== 'string' || categories.length > 200) {
-        errors.push("'categories' must be a string up to 200 chars.");
-      } else if (!ValidationUtils.isServiceType.call(ValidationUtils, categories)) {
-        errors.push("'categories' does not match service type codes.");
-      }
+      listField('categories', categories, 0, 200, ValidationUtils.isServiceType, 'category', { allowArray: true });
     }
 
     // data_sources
     if (data_sources != null) {
-      if (typeof data_sources !== 'string' || data_sources.length > 200) {
-        errors.push("'data_sources' must be a string up to 200 chars.");
-      } else if (!ValidationUtils.isDataSource.call(ValidationUtils, data_sources)) {
-        errors.push("'data_sources' does not match allowed values.");
-      }
+      listField('data sources', data_sources, 0, 200, ValidationUtils.isDataSource, 'data source', { allowArray: true });
     }
 
     // airspaces
-    if (airspaces != null && typeof airspaces !== 'string') {
-      errors.push("'airspaces' must be a string if provided.");
+    if (airspaces != null) {
+      normalizeListParam('airspaces', airspaces, {
+        maxLen: null,
+        maxItems: 200,
+        allowArray: true,
+        emptyMessage: "'airspaces' must contain at least one range.",
+      });
     }
 
     // gspeed

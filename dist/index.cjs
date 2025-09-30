@@ -1,21 +1,14 @@
-import { createRequire } from 'module'; const require = createRequire(import.meta.url);
 var __getOwnPropNames = Object.getOwnPropertyNames;
-var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
-  get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
-}) : x)(function(x) {
-  if (typeof require !== "undefined") return require.apply(this, arguments);
-  throw Error('Dynamic require of "' + x + '" is not supported');
-});
-var __commonJS = (cb, mod) => function __require2() {
+var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
 
 // node_modules/delayed-stream/lib/delayed_stream.js
 var require_delayed_stream = __commonJS({
-  "node_modules/delayed-stream/lib/delayed_stream.js"(exports, module) {
-    var Stream = __require("stream").Stream;
-    var util = __require("util");
-    module.exports = DelayedStream;
+  "node_modules/delayed-stream/lib/delayed_stream.js"(exports2, module2) {
+    var Stream = require("stream").Stream;
+    var util = require("util");
+    module2.exports = DelayedStream;
     function DelayedStream() {
       this.source = null;
       this.dataSize = 0;
@@ -103,11 +96,11 @@ var require_delayed_stream = __commonJS({
 
 // node_modules/combined-stream/lib/combined_stream.js
 var require_combined_stream = __commonJS({
-  "node_modules/combined-stream/lib/combined_stream.js"(exports, module) {
-    var util = __require("util");
-    var Stream = __require("stream").Stream;
+  "node_modules/combined-stream/lib/combined_stream.js"(exports2, module2) {
+    var util = require("util");
+    var Stream = require("stream").Stream;
     var DelayedStream = require_delayed_stream();
-    module.exports = CombinedStream;
+    module2.exports = CombinedStream;
     function CombinedStream() {
       this.writable = false;
       this.readable = true;
@@ -272,8 +265,8 @@ var require_combined_stream = __commonJS({
 
 // node_modules/mime-db/db.json
 var require_db = __commonJS({
-  "node_modules/mime-db/db.json"(exports, module) {
-    module.exports = {
+  "node_modules/mime-db/db.json"(exports2, module2) {
+    module2.exports = {
       "application/1d-interleaved-parityfec": {
         source: "iana"
       },
@@ -8797,27 +8790,27 @@ var require_db = __commonJS({
 
 // node_modules/mime-db/index.js
 var require_mime_db = __commonJS({
-  "node_modules/mime-db/index.js"(exports, module) {
-    module.exports = require_db();
+  "node_modules/mime-db/index.js"(exports2, module2) {
+    module2.exports = require_db();
   }
 });
 
 // node_modules/mime-types/index.js
 var require_mime_types = __commonJS({
-  "node_modules/mime-types/index.js"(exports) {
+  "node_modules/mime-types/index.js"(exports2) {
     "use strict";
     var db = require_mime_db();
-    var extname = __require("path").extname;
+    var extname = require("path").extname;
     var EXTRACT_TYPE_REGEXP = /^\s*([^;\s]*)(?:;|\s|$)/;
     var TEXT_TYPE_REGEXP = /^text\//i;
-    exports.charset = charset;
-    exports.charsets = { lookup: charset };
-    exports.contentType = contentType;
-    exports.extension = extension;
-    exports.extensions = /* @__PURE__ */ Object.create(null);
-    exports.lookup = lookup;
-    exports.types = /* @__PURE__ */ Object.create(null);
-    populateMaps(exports.extensions, exports.types);
+    exports2.charset = charset;
+    exports2.charsets = { lookup: charset };
+    exports2.contentType = contentType;
+    exports2.extension = extension;
+    exports2.extensions = /* @__PURE__ */ Object.create(null);
+    exports2.lookup = lookup;
+    exports2.types = /* @__PURE__ */ Object.create(null);
+    populateMaps(exports2.extensions, exports2.types);
     function charset(type) {
       if (!type || typeof type !== "string") {
         return false;
@@ -8836,12 +8829,12 @@ var require_mime_types = __commonJS({
       if (!str || typeof str !== "string") {
         return false;
       }
-      var mime = str.indexOf("/") === -1 ? exports.lookup(str) : str;
+      var mime = str.indexOf("/") === -1 ? exports2.lookup(str) : str;
       if (!mime) {
         return false;
       }
       if (mime.indexOf("charset") === -1) {
-        var charset2 = exports.charset(mime);
+        var charset2 = exports2.charset(mime);
         if (charset2) mime += "; charset=" + charset2.toLowerCase();
       }
       return mime;
@@ -8851,7 +8844,7 @@ var require_mime_types = __commonJS({
         return false;
       }
       var match = EXTRACT_TYPE_REGEXP.exec(type);
-      var exts = match && exports.extensions[match[1].toLowerCase()];
+      var exts = match && exports2.extensions[match[1].toLowerCase()];
       if (!exts || !exts.length) {
         return false;
       }
@@ -8865,7 +8858,7 @@ var require_mime_types = __commonJS({
       if (!extension2) {
         return false;
       }
-      return exports.types[extension2] || false;
+      return exports2.types[extension2] || false;
     }
     function populateMaps(extensions, types) {
       var preference = ["nginx", "apache", void 0, "iana"];
@@ -8894,8 +8887,8 @@ var require_mime_types = __commonJS({
 
 // node_modules/asynckit/lib/defer.js
 var require_defer = __commonJS({
-  "node_modules/asynckit/lib/defer.js"(exports, module) {
-    module.exports = defer;
+  "node_modules/asynckit/lib/defer.js"(exports2, module2) {
+    module2.exports = defer;
     function defer(fn) {
       var nextTick = typeof setImmediate == "function" ? setImmediate : typeof process == "object" && typeof process.nextTick == "function" ? process.nextTick : null;
       if (nextTick) {
@@ -8909,9 +8902,9 @@ var require_defer = __commonJS({
 
 // node_modules/asynckit/lib/async.js
 var require_async = __commonJS({
-  "node_modules/asynckit/lib/async.js"(exports, module) {
+  "node_modules/asynckit/lib/async.js"(exports2, module2) {
     var defer = require_defer();
-    module.exports = async;
+    module2.exports = async;
     function async(callback) {
       var isAsync = false;
       defer(function() {
@@ -8932,8 +8925,8 @@ var require_async = __commonJS({
 
 // node_modules/asynckit/lib/abort.js
 var require_abort = __commonJS({
-  "node_modules/asynckit/lib/abort.js"(exports, module) {
-    module.exports = abort;
+  "node_modules/asynckit/lib/abort.js"(exports2, module2) {
+    module2.exports = abort;
     function abort(state) {
       Object.keys(state.jobs).forEach(clean.bind(state));
       state.jobs = {};
@@ -8948,10 +8941,10 @@ var require_abort = __commonJS({
 
 // node_modules/asynckit/lib/iterate.js
 var require_iterate = __commonJS({
-  "node_modules/asynckit/lib/iterate.js"(exports, module) {
+  "node_modules/asynckit/lib/iterate.js"(exports2, module2) {
     var async = require_async();
     var abort = require_abort();
-    module.exports = iterate;
+    module2.exports = iterate;
     function iterate(list, iterator, state, callback) {
       var key = state["keyedList"] ? state["keyedList"][state.index] : state.index;
       state.jobs[key] = runJob(iterator, key, list[key], function(error, output) {
@@ -8981,8 +8974,8 @@ var require_iterate = __commonJS({
 
 // node_modules/asynckit/lib/state.js
 var require_state = __commonJS({
-  "node_modules/asynckit/lib/state.js"(exports, module) {
-    module.exports = state;
+  "node_modules/asynckit/lib/state.js"(exports2, module2) {
+    module2.exports = state;
     function state(list, sortMethod) {
       var isNamedList = !Array.isArray(list), initState = {
         index: 0,
@@ -9003,10 +8996,10 @@ var require_state = __commonJS({
 
 // node_modules/asynckit/lib/terminator.js
 var require_terminator = __commonJS({
-  "node_modules/asynckit/lib/terminator.js"(exports, module) {
+  "node_modules/asynckit/lib/terminator.js"(exports2, module2) {
     var abort = require_abort();
     var async = require_async();
-    module.exports = terminator;
+    module2.exports = terminator;
     function terminator(callback) {
       if (!Object.keys(this.jobs).length) {
         return;
@@ -9020,11 +9013,11 @@ var require_terminator = __commonJS({
 
 // node_modules/asynckit/parallel.js
 var require_parallel = __commonJS({
-  "node_modules/asynckit/parallel.js"(exports, module) {
+  "node_modules/asynckit/parallel.js"(exports2, module2) {
     var iterate = require_iterate();
     var initState = require_state();
     var terminator = require_terminator();
-    module.exports = parallel;
+    module2.exports = parallel;
     function parallel(list, iterator, callback) {
       var state = initState(list);
       while (state.index < (state["keyedList"] || list).length) {
@@ -9047,13 +9040,13 @@ var require_parallel = __commonJS({
 
 // node_modules/asynckit/serialOrdered.js
 var require_serialOrdered = __commonJS({
-  "node_modules/asynckit/serialOrdered.js"(exports, module) {
+  "node_modules/asynckit/serialOrdered.js"(exports2, module2) {
     var iterate = require_iterate();
     var initState = require_state();
     var terminator = require_terminator();
-    module.exports = serialOrdered;
-    module.exports.ascending = ascending;
-    module.exports.descending = descending;
+    module2.exports = serialOrdered;
+    module2.exports.ascending = ascending;
+    module2.exports.descending = descending;
     function serialOrdered(list, iterator, sortMethod, callback) {
       var state = initState(list, sortMethod);
       iterate(list, iterator, state, function iteratorHandler(error, result) {
@@ -9081,9 +9074,9 @@ var require_serialOrdered = __commonJS({
 
 // node_modules/asynckit/serial.js
 var require_serial = __commonJS({
-  "node_modules/asynckit/serial.js"(exports, module) {
+  "node_modules/asynckit/serial.js"(exports2, module2) {
     var serialOrdered = require_serialOrdered();
-    module.exports = serial;
+    module2.exports = serial;
     function serial(list, iterator, callback) {
       return serialOrdered(list, iterator, null, callback);
     }
@@ -9092,8 +9085,8 @@ var require_serial = __commonJS({
 
 // node_modules/asynckit/index.js
 var require_asynckit = __commonJS({
-  "node_modules/asynckit/index.js"(exports, module) {
-    module.exports = {
+  "node_modules/asynckit/index.js"(exports2, module2) {
+    module2.exports = {
       parallel: require_parallel(),
       serial: require_serial(),
       serialOrdered: require_serialOrdered()
@@ -9103,121 +9096,121 @@ var require_asynckit = __commonJS({
 
 // node_modules/es-object-atoms/index.js
 var require_es_object_atoms = __commonJS({
-  "node_modules/es-object-atoms/index.js"(exports, module) {
+  "node_modules/es-object-atoms/index.js"(exports2, module2) {
     "use strict";
-    module.exports = Object;
+    module2.exports = Object;
   }
 });
 
 // node_modules/es-errors/index.js
 var require_es_errors = __commonJS({
-  "node_modules/es-errors/index.js"(exports, module) {
+  "node_modules/es-errors/index.js"(exports2, module2) {
     "use strict";
-    module.exports = Error;
+    module2.exports = Error;
   }
 });
 
 // node_modules/es-errors/eval.js
 var require_eval = __commonJS({
-  "node_modules/es-errors/eval.js"(exports, module) {
+  "node_modules/es-errors/eval.js"(exports2, module2) {
     "use strict";
-    module.exports = EvalError;
+    module2.exports = EvalError;
   }
 });
 
 // node_modules/es-errors/range.js
 var require_range = __commonJS({
-  "node_modules/es-errors/range.js"(exports, module) {
+  "node_modules/es-errors/range.js"(exports2, module2) {
     "use strict";
-    module.exports = RangeError;
+    module2.exports = RangeError;
   }
 });
 
 // node_modules/es-errors/ref.js
 var require_ref = __commonJS({
-  "node_modules/es-errors/ref.js"(exports, module) {
+  "node_modules/es-errors/ref.js"(exports2, module2) {
     "use strict";
-    module.exports = ReferenceError;
+    module2.exports = ReferenceError;
   }
 });
 
 // node_modules/es-errors/syntax.js
 var require_syntax = __commonJS({
-  "node_modules/es-errors/syntax.js"(exports, module) {
+  "node_modules/es-errors/syntax.js"(exports2, module2) {
     "use strict";
-    module.exports = SyntaxError;
+    module2.exports = SyntaxError;
   }
 });
 
 // node_modules/es-errors/type.js
 var require_type = __commonJS({
-  "node_modules/es-errors/type.js"(exports, module) {
+  "node_modules/es-errors/type.js"(exports2, module2) {
     "use strict";
-    module.exports = TypeError;
+    module2.exports = TypeError;
   }
 });
 
 // node_modules/es-errors/uri.js
 var require_uri = __commonJS({
-  "node_modules/es-errors/uri.js"(exports, module) {
+  "node_modules/es-errors/uri.js"(exports2, module2) {
     "use strict";
-    module.exports = URIError;
+    module2.exports = URIError;
   }
 });
 
 // node_modules/math-intrinsics/abs.js
 var require_abs = __commonJS({
-  "node_modules/math-intrinsics/abs.js"(exports, module) {
+  "node_modules/math-intrinsics/abs.js"(exports2, module2) {
     "use strict";
-    module.exports = Math.abs;
+    module2.exports = Math.abs;
   }
 });
 
 // node_modules/math-intrinsics/floor.js
 var require_floor = __commonJS({
-  "node_modules/math-intrinsics/floor.js"(exports, module) {
+  "node_modules/math-intrinsics/floor.js"(exports2, module2) {
     "use strict";
-    module.exports = Math.floor;
+    module2.exports = Math.floor;
   }
 });
 
 // node_modules/math-intrinsics/max.js
 var require_max = __commonJS({
-  "node_modules/math-intrinsics/max.js"(exports, module) {
+  "node_modules/math-intrinsics/max.js"(exports2, module2) {
     "use strict";
-    module.exports = Math.max;
+    module2.exports = Math.max;
   }
 });
 
 // node_modules/math-intrinsics/min.js
 var require_min = __commonJS({
-  "node_modules/math-intrinsics/min.js"(exports, module) {
+  "node_modules/math-intrinsics/min.js"(exports2, module2) {
     "use strict";
-    module.exports = Math.min;
+    module2.exports = Math.min;
   }
 });
 
 // node_modules/math-intrinsics/pow.js
 var require_pow = __commonJS({
-  "node_modules/math-intrinsics/pow.js"(exports, module) {
+  "node_modules/math-intrinsics/pow.js"(exports2, module2) {
     "use strict";
-    module.exports = Math.pow;
+    module2.exports = Math.pow;
   }
 });
 
 // node_modules/math-intrinsics/round.js
 var require_round = __commonJS({
-  "node_modules/math-intrinsics/round.js"(exports, module) {
+  "node_modules/math-intrinsics/round.js"(exports2, module2) {
     "use strict";
-    module.exports = Math.round;
+    module2.exports = Math.round;
   }
 });
 
 // node_modules/math-intrinsics/isNaN.js
 var require_isNaN = __commonJS({
-  "node_modules/math-intrinsics/isNaN.js"(exports, module) {
+  "node_modules/math-intrinsics/isNaN.js"(exports2, module2) {
     "use strict";
-    module.exports = Number.isNaN || function isNaN2(a) {
+    module2.exports = Number.isNaN || function isNaN2(a) {
       return a !== a;
     };
   }
@@ -9225,10 +9218,10 @@ var require_isNaN = __commonJS({
 
 // node_modules/math-intrinsics/sign.js
 var require_sign = __commonJS({
-  "node_modules/math-intrinsics/sign.js"(exports, module) {
+  "node_modules/math-intrinsics/sign.js"(exports2, module2) {
     "use strict";
     var $isNaN = require_isNaN();
-    module.exports = function sign(number) {
+    module2.exports = function sign(number) {
       if ($isNaN(number) || number === 0) {
         return number;
       }
@@ -9239,15 +9232,15 @@ var require_sign = __commonJS({
 
 // node_modules/gopd/gOPD.js
 var require_gOPD = __commonJS({
-  "node_modules/gopd/gOPD.js"(exports, module) {
+  "node_modules/gopd/gOPD.js"(exports2, module2) {
     "use strict";
-    module.exports = Object.getOwnPropertyDescriptor;
+    module2.exports = Object.getOwnPropertyDescriptor;
   }
 });
 
 // node_modules/gopd/index.js
 var require_gopd = __commonJS({
-  "node_modules/gopd/index.js"(exports, module) {
+  "node_modules/gopd/index.js"(exports2, module2) {
     "use strict";
     var $gOPD = require_gOPD();
     if ($gOPD) {
@@ -9257,13 +9250,13 @@ var require_gopd = __commonJS({
         $gOPD = null;
       }
     }
-    module.exports = $gOPD;
+    module2.exports = $gOPD;
   }
 });
 
 // node_modules/es-define-property/index.js
 var require_es_define_property = __commonJS({
-  "node_modules/es-define-property/index.js"(exports, module) {
+  "node_modules/es-define-property/index.js"(exports2, module2) {
     "use strict";
     var $defineProperty = Object.defineProperty || false;
     if ($defineProperty) {
@@ -9273,15 +9266,15 @@ var require_es_define_property = __commonJS({
         $defineProperty = false;
       }
     }
-    module.exports = $defineProperty;
+    module2.exports = $defineProperty;
   }
 });
 
 // node_modules/has-symbols/shams.js
 var require_shams = __commonJS({
-  "node_modules/has-symbols/shams.js"(exports, module) {
+  "node_modules/has-symbols/shams.js"(exports2, module2) {
     "use strict";
-    module.exports = function hasSymbols() {
+    module2.exports = function hasSymbols() {
       if (typeof Symbol !== "function" || typeof Object.getOwnPropertySymbols !== "function") {
         return false;
       }
@@ -9334,11 +9327,11 @@ var require_shams = __commonJS({
 
 // node_modules/has-symbols/index.js
 var require_has_symbols = __commonJS({
-  "node_modules/has-symbols/index.js"(exports, module) {
+  "node_modules/has-symbols/index.js"(exports2, module2) {
     "use strict";
     var origSymbol = typeof Symbol !== "undefined" && Symbol;
     var hasSymbolSham = require_shams();
-    module.exports = function hasNativeSymbols() {
+    module2.exports = function hasNativeSymbols() {
       if (typeof origSymbol !== "function") {
         return false;
       }
@@ -9358,24 +9351,24 @@ var require_has_symbols = __commonJS({
 
 // node_modules/get-proto/Reflect.getPrototypeOf.js
 var require_Reflect_getPrototypeOf = __commonJS({
-  "node_modules/get-proto/Reflect.getPrototypeOf.js"(exports, module) {
+  "node_modules/get-proto/Reflect.getPrototypeOf.js"(exports2, module2) {
     "use strict";
-    module.exports = typeof Reflect !== "undefined" && Reflect.getPrototypeOf || null;
+    module2.exports = typeof Reflect !== "undefined" && Reflect.getPrototypeOf || null;
   }
 });
 
 // node_modules/get-proto/Object.getPrototypeOf.js
 var require_Object_getPrototypeOf = __commonJS({
-  "node_modules/get-proto/Object.getPrototypeOf.js"(exports, module) {
+  "node_modules/get-proto/Object.getPrototypeOf.js"(exports2, module2) {
     "use strict";
     var $Object = require_es_object_atoms();
-    module.exports = $Object.getPrototypeOf || null;
+    module2.exports = $Object.getPrototypeOf || null;
   }
 });
 
 // node_modules/function-bind/implementation.js
 var require_implementation = __commonJS({
-  "node_modules/function-bind/implementation.js"(exports, module) {
+  "node_modules/function-bind/implementation.js"(exports2, module2) {
     "use strict";
     var ERROR_MESSAGE = "Function.prototype.bind called on incompatible ";
     var toStr = Object.prototype.toString;
@@ -9408,7 +9401,7 @@ var require_implementation = __commonJS({
       }
       return str;
     };
-    module.exports = function bind(that) {
+    module2.exports = function bind(that) {
       var target = this;
       if (typeof target !== "function" || toStr.apply(target) !== funcType) {
         throw new TypeError(ERROR_MESSAGE + target);
@@ -9451,58 +9444,58 @@ var require_implementation = __commonJS({
 
 // node_modules/function-bind/index.js
 var require_function_bind = __commonJS({
-  "node_modules/function-bind/index.js"(exports, module) {
+  "node_modules/function-bind/index.js"(exports2, module2) {
     "use strict";
     var implementation = require_implementation();
-    module.exports = Function.prototype.bind || implementation;
+    module2.exports = Function.prototype.bind || implementation;
   }
 });
 
 // node_modules/call-bind-apply-helpers/functionCall.js
 var require_functionCall = __commonJS({
-  "node_modules/call-bind-apply-helpers/functionCall.js"(exports, module) {
+  "node_modules/call-bind-apply-helpers/functionCall.js"(exports2, module2) {
     "use strict";
-    module.exports = Function.prototype.call;
+    module2.exports = Function.prototype.call;
   }
 });
 
 // node_modules/call-bind-apply-helpers/functionApply.js
 var require_functionApply = __commonJS({
-  "node_modules/call-bind-apply-helpers/functionApply.js"(exports, module) {
+  "node_modules/call-bind-apply-helpers/functionApply.js"(exports2, module2) {
     "use strict";
-    module.exports = Function.prototype.apply;
+    module2.exports = Function.prototype.apply;
   }
 });
 
 // node_modules/call-bind-apply-helpers/reflectApply.js
 var require_reflectApply = __commonJS({
-  "node_modules/call-bind-apply-helpers/reflectApply.js"(exports, module) {
+  "node_modules/call-bind-apply-helpers/reflectApply.js"(exports2, module2) {
     "use strict";
-    module.exports = typeof Reflect !== "undefined" && Reflect && Reflect.apply;
+    module2.exports = typeof Reflect !== "undefined" && Reflect && Reflect.apply;
   }
 });
 
 // node_modules/call-bind-apply-helpers/actualApply.js
 var require_actualApply = __commonJS({
-  "node_modules/call-bind-apply-helpers/actualApply.js"(exports, module) {
+  "node_modules/call-bind-apply-helpers/actualApply.js"(exports2, module2) {
     "use strict";
     var bind = require_function_bind();
     var $apply = require_functionApply();
     var $call = require_functionCall();
     var $reflectApply = require_reflectApply();
-    module.exports = $reflectApply || bind.call($call, $apply);
+    module2.exports = $reflectApply || bind.call($call, $apply);
   }
 });
 
 // node_modules/call-bind-apply-helpers/index.js
 var require_call_bind_apply_helpers = __commonJS({
-  "node_modules/call-bind-apply-helpers/index.js"(exports, module) {
+  "node_modules/call-bind-apply-helpers/index.js"(exports2, module2) {
     "use strict";
     var bind = require_function_bind();
     var $TypeError = require_type();
     var $call = require_functionCall();
     var $actualApply = require_actualApply();
-    module.exports = function callBindBasic(args) {
+    module2.exports = function callBindBasic(args) {
       if (args.length < 1 || typeof args[0] !== "function") {
         throw new $TypeError("a function is required");
       }
@@ -9513,7 +9506,7 @@ var require_call_bind_apply_helpers = __commonJS({
 
 // node_modules/dunder-proto/get.js
 var require_get = __commonJS({
-  "node_modules/dunder-proto/get.js"(exports, module) {
+  "node_modules/dunder-proto/get.js"(exports2, module2) {
     "use strict";
     var callBind = require_call_bind_apply_helpers();
     var gOPD = require_gopd();
@@ -9533,7 +9526,7 @@ var require_get = __commonJS({
     );
     var $Object = Object;
     var $getPrototypeOf = $Object.getPrototypeOf;
-    module.exports = desc && typeof desc.get === "function" ? callBind([desc.get]) : typeof $getPrototypeOf === "function" ? (
+    module2.exports = desc && typeof desc.get === "function" ? callBind([desc.get]) : typeof $getPrototypeOf === "function" ? (
       /** @type {import('./get')} */
       function getDunder(value) {
         return $getPrototypeOf(value == null ? value : $Object(value));
@@ -9544,12 +9537,12 @@ var require_get = __commonJS({
 
 // node_modules/get-proto/index.js
 var require_get_proto = __commonJS({
-  "node_modules/get-proto/index.js"(exports, module) {
+  "node_modules/get-proto/index.js"(exports2, module2) {
     "use strict";
     var reflectGetProto = require_Reflect_getPrototypeOf();
     var originalGetProto = require_Object_getPrototypeOf();
     var getDunderProto = require_get();
-    module.exports = reflectGetProto ? function getProto(O) {
+    module2.exports = reflectGetProto ? function getProto(O) {
       return reflectGetProto(O);
     } : originalGetProto ? function getProto(O) {
       if (!O || typeof O !== "object" && typeof O !== "function") {
@@ -9564,18 +9557,18 @@ var require_get_proto = __commonJS({
 
 // node_modules/hasown/index.js
 var require_hasown = __commonJS({
-  "node_modules/hasown/index.js"(exports, module) {
+  "node_modules/hasown/index.js"(exports2, module2) {
     "use strict";
     var call = Function.prototype.call;
     var $hasOwn = Object.prototype.hasOwnProperty;
     var bind = require_function_bind();
-    module.exports = bind.call(call, $hasOwn);
+    module2.exports = bind.call(call, $hasOwn);
   }
 });
 
 // node_modules/get-intrinsic/index.js
 var require_get_intrinsic = __commonJS({
-  "node_modules/get-intrinsic/index.js"(exports, module) {
+  "node_modules/get-intrinsic/index.js"(exports2, module2) {
     "use strict";
     var undefined2;
     var $Object = require_es_object_atoms();
@@ -9840,7 +9833,7 @@ var require_get_intrinsic = __commonJS({
       }
       throw new $SyntaxError("intrinsic " + name + " does not exist!");
     };
-    module.exports = function GetIntrinsic(name, allowMissing) {
+    module2.exports = function GetIntrinsic(name, allowMissing) {
       if (typeof name !== "string" || name.length === 0) {
         throw new $TypeError("intrinsic name must be a non-empty string");
       }
@@ -9906,10 +9899,10 @@ var require_get_intrinsic = __commonJS({
 
 // node_modules/has-tostringtag/shams.js
 var require_shams2 = __commonJS({
-  "node_modules/has-tostringtag/shams.js"(exports, module) {
+  "node_modules/has-tostringtag/shams.js"(exports2, module2) {
     "use strict";
     var hasSymbols = require_shams();
-    module.exports = function hasToStringTagShams() {
+    module2.exports = function hasToStringTagShams() {
       return hasSymbols() && !!Symbol.toStringTag;
     };
   }
@@ -9917,7 +9910,7 @@ var require_shams2 = __commonJS({
 
 // node_modules/es-set-tostringtag/index.js
 var require_es_set_tostringtag = __commonJS({
-  "node_modules/es-set-tostringtag/index.js"(exports, module) {
+  "node_modules/es-set-tostringtag/index.js"(exports2, module2) {
     "use strict";
     var GetIntrinsic = require_get_intrinsic();
     var $defineProperty = GetIntrinsic("%Object.defineProperty%", true);
@@ -9925,7 +9918,7 @@ var require_es_set_tostringtag = __commonJS({
     var hasOwn = require_hasown();
     var $TypeError = require_type();
     var toStringTag = hasToStringTag ? Symbol.toStringTag : null;
-    module.exports = function setToStringTag(object, value) {
+    module2.exports = function setToStringTag(object, value) {
       var overrideIfSet = arguments.length > 2 && !!arguments[2] && arguments[2].force;
       var nonConfigurable = arguments.length > 2 && !!arguments[2] && arguments[2].nonConfigurable;
       if (typeof overrideIfSet !== "undefined" && typeof overrideIfSet !== "boolean" || typeof nonConfigurable !== "undefined" && typeof nonConfigurable !== "boolean") {
@@ -9949,8 +9942,8 @@ var require_es_set_tostringtag = __commonJS({
 
 // node_modules/form-data/lib/populate.js
 var require_populate = __commonJS({
-  "node_modules/form-data/lib/populate.js"(exports, module) {
-    module.exports = function(dst, src) {
+  "node_modules/form-data/lib/populate.js"(exports2, module2) {
+    module2.exports = function(dst, src) {
       Object.keys(src).forEach(function(prop) {
         dst[prop] = dst[prop] || src[prop];
       });
@@ -9961,20 +9954,20 @@ var require_populate = __commonJS({
 
 // node_modules/form-data/lib/form_data.js
 var require_form_data = __commonJS({
-  "node_modules/form-data/lib/form_data.js"(exports, module) {
+  "node_modules/form-data/lib/form_data.js"(exports2, module2) {
     var CombinedStream = require_combined_stream();
-    var util = __require("util");
-    var path = __require("path");
-    var http = __require("http");
-    var https = __require("https");
-    var parseUrl = __require("url").parse;
-    var fs = __require("fs");
-    var Stream = __require("stream").Stream;
+    var util = require("util");
+    var path = require("path");
+    var http = require("http");
+    var https = require("https");
+    var parseUrl = require("url").parse;
+    var fs = require("fs");
+    var Stream = require("stream").Stream;
     var mime = require_mime_types();
     var asynckit = require_asynckit();
     var setToStringTag = require_es_set_tostringtag();
     var populate = require_populate();
-    module.exports = FormData2;
+    module2.exports = FormData2;
     util.inherits(FormData2, CombinedStream);
     function FormData2(options) {
       if (!(this instanceof FormData2)) {
@@ -10278,9 +10271,9 @@ var require_form_data = __commonJS({
 
 // node_modules/proxy-from-env/index.js
 var require_proxy_from_env = __commonJS({
-  "node_modules/proxy-from-env/index.js"(exports) {
+  "node_modules/proxy-from-env/index.js"(exports2) {
     "use strict";
-    var parseUrl = __require("url").parse;
+    var parseUrl = require("url").parse;
     var DEFAULT_PORTS = {
       ftp: 21,
       gopher: 70,
@@ -10342,18 +10335,18 @@ var require_proxy_from_env = __commonJS({
     function getEnv(key) {
       return process.env[key.toLowerCase()] || process.env[key.toUpperCase()] || "";
     }
-    exports.getProxyForUrl = getProxyForUrl;
+    exports2.getProxyForUrl = getProxyForUrl;
   }
 });
 
 // node_modules/follow-redirects/debug.js
 var require_debug = __commonJS({
-  "node_modules/follow-redirects/debug.js"(exports, module) {
+  "node_modules/follow-redirects/debug.js"(exports2, module2) {
     var debug;
-    module.exports = function() {
+    module2.exports = function() {
       if (!debug) {
         try {
-          debug = __require("debug")("follow-redirects");
+          debug = require("debug")("follow-redirects");
         } catch (error) {
         }
         if (typeof debug !== "function") {
@@ -10368,13 +10361,13 @@ var require_debug = __commonJS({
 
 // node_modules/follow-redirects/index.js
 var require_follow_redirects = __commonJS({
-  "node_modules/follow-redirects/index.js"(exports, module) {
-    var url = __require("url");
+  "node_modules/follow-redirects/index.js"(exports2, module2) {
+    var url = require("url");
     var URL2 = url.URL;
-    var http = __require("http");
-    var https = __require("https");
-    var Writable = __require("stream").Writable;
-    var assert = __require("assert");
+    var http = require("http");
+    var https = require("https");
+    var Writable = require("stream").Writable;
+    var assert = require("assert");
     var debug = require_debug();
     (function detectUnsupportedEnvironment() {
       var looksLikeNode = typeof process !== "undefined";
@@ -10714,7 +10707,7 @@ var require_follow_redirects = __commonJS({
       this._performRequest();
     };
     function wrap(protocols) {
-      var exports2 = {
+      var exports3 = {
         maxRedirects: 21,
         maxBodyLength: 10 * 1024 * 1024
       };
@@ -10722,7 +10715,7 @@ var require_follow_redirects = __commonJS({
       Object.keys(protocols).forEach(function(scheme) {
         var protocol = scheme + ":";
         var nativeProtocol = nativeProtocols[protocol] = protocols[scheme];
-        var wrappedProtocol = exports2[scheme] = Object.create(nativeProtocol);
+        var wrappedProtocol = exports3[scheme] = Object.create(nativeProtocol);
         function request(input, options, callback) {
           if (isURL(input)) {
             input = spreadUrlObject(input);
@@ -10738,8 +10731,8 @@ var require_follow_redirects = __commonJS({
             options = null;
           }
           options = Object.assign({
-            maxRedirects: exports2.maxRedirects,
-            maxBodyLength: exports2.maxBodyLength
+            maxRedirects: exports3.maxRedirects,
+            maxBodyLength: exports3.maxBodyLength
           }, input, options);
           options.nativeProtocols = nativeProtocols;
           if (!isString(options.host) && !isString(options.hostname)) {
@@ -10759,7 +10752,7 @@ var require_follow_redirects = __commonJS({
           get: { value: get, configurable: true, enumerable: true, writable: true }
         });
       });
-      return exports2;
+      return exports3;
     }
     function noop() {
     }
@@ -10857,26 +10850,26 @@ var require_follow_redirects = __commonJS({
     function isURL(value) {
       return URL2 && value instanceof URL2;
     }
-    module.exports = wrap({ http, https });
-    module.exports.wrap = wrap;
+    module2.exports = wrap({ http, https });
+    module2.exports.wrap = wrap;
   }
 });
 
 // node_modules/axios/dist/node/axios.cjs
 var require_axios = __commonJS({
-  "node_modules/axios/dist/node/axios.cjs"(exports, module) {
+  "node_modules/axios/dist/node/axios.cjs"(exports2, module2) {
     "use strict";
     var FormData$1 = require_form_data();
-    var crypto = __require("crypto");
-    var url = __require("url");
+    var crypto = require("crypto");
+    var url = require("url");
     var proxyFromEnv = require_proxy_from_env();
-    var http = __require("http");
-    var https = __require("https");
-    var util = __require("util");
+    var http = require("http");
+    var https = require("https");
+    var util = require("util");
     var followRedirects = require_follow_redirects();
-    var zlib = __require("zlib");
-    var stream = __require("stream");
-    var events = __require("events");
+    var zlib = require("zlib");
+    var stream = require("stream");
+    var events = require("events");
     function _interopDefaultLegacy(e) {
       return e && typeof e === "object" && "default" in e ? e : { "default": e };
     }
@@ -14037,20 +14030,20 @@ var require_axios = __commonJS({
     axios.getAdapter = adapters.getAdapter;
     axios.HttpStatusCode = HttpStatusCode$1;
     axios.default = axios;
-    module.exports = axios;
+    module2.exports = axios;
   }
 });
 
 // node_modules/object-inspect/util.inspect.js
 var require_util_inspect = __commonJS({
-  "node_modules/object-inspect/util.inspect.js"(exports, module) {
-    module.exports = __require("util").inspect;
+  "node_modules/object-inspect/util.inspect.js"(exports2, module2) {
+    module2.exports = require("util").inspect;
   }
 });
 
 // node_modules/object-inspect/index.js
 var require_object_inspect = __commonJS({
-  "node_modules/object-inspect/index.js"(exports, module) {
+  "node_modules/object-inspect/index.js"(exports2, module2) {
     var hasMap = typeof Map === "function" && Map.prototype;
     var mapSizeDescriptor = Object.getOwnPropertyDescriptor && hasMap ? Object.getOwnPropertyDescriptor(Map.prototype, "size") : null;
     var mapSize = hasMap && mapSizeDescriptor && typeof mapSizeDescriptor.get === "function" ? mapSizeDescriptor.get : null;
@@ -14115,7 +14108,7 @@ var require_object_inspect = __commonJS({
       "double": /(["\\])/g,
       single: /(['\\])/g
     };
-    module.exports = function inspect_(obj, options, depth, seen) {
+    module2.exports = function inspect_(obj, options, depth, seen) {
       var opts = options || {};
       if (has(opts, "quoteStyle") && !has(quotes, opts.quoteStyle)) {
         throw new TypeError('option "quoteStyle" must be "single" or "double"');
@@ -14581,7 +14574,7 @@ var require_object_inspect = __commonJS({
 
 // node_modules/side-channel-list/index.js
 var require_side_channel_list = __commonJS({
-  "node_modules/side-channel-list/index.js"(exports, module) {
+  "node_modules/side-channel-list/index.js"(exports2, module2) {
     "use strict";
     var inspect = require_object_inspect();
     var $TypeError = require_type();
@@ -14632,7 +14625,7 @@ var require_side_channel_list = __commonJS({
         return listGetNode(objects, key, true);
       }
     };
-    module.exports = function getSideChannelList() {
+    module2.exports = function getSideChannelList() {
       var $o;
       var channel = {
         assert: function(key) {
@@ -14675,12 +14668,12 @@ var require_side_channel_list = __commonJS({
 
 // node_modules/call-bound/index.js
 var require_call_bound = __commonJS({
-  "node_modules/call-bound/index.js"(exports, module) {
+  "node_modules/call-bound/index.js"(exports2, module2) {
     "use strict";
     var GetIntrinsic = require_get_intrinsic();
     var callBindBasic = require_call_bind_apply_helpers();
     var $indexOf = callBindBasic([GetIntrinsic("%String.prototype.indexOf%")]);
-    module.exports = function callBoundIntrinsic(name, allowMissing) {
+    module2.exports = function callBoundIntrinsic(name, allowMissing) {
       var intrinsic = (
         /** @type {(this: unknown, ...args: unknown[]) => unknown} */
         GetIntrinsic(name, !!allowMissing)
@@ -14698,7 +14691,7 @@ var require_call_bound = __commonJS({
 
 // node_modules/side-channel-map/index.js
 var require_side_channel_map = __commonJS({
-  "node_modules/side-channel-map/index.js"(exports, module) {
+  "node_modules/side-channel-map/index.js"(exports2, module2) {
     "use strict";
     var GetIntrinsic = require_get_intrinsic();
     var callBound = require_call_bound();
@@ -14710,7 +14703,7 @@ var require_side_channel_map = __commonJS({
     var $mapHas = callBound("Map.prototype.has", true);
     var $mapDelete = callBound("Map.prototype.delete", true);
     var $mapSize = callBound("Map.prototype.size", true);
-    module.exports = !!$Map && /** @type {Exclude<import('.'), false>} */
+    module2.exports = !!$Map && /** @type {Exclude<import('.'), false>} */
     function getSideChannelMap() {
       var $m;
       var channel = {
@@ -14754,7 +14747,7 @@ var require_side_channel_map = __commonJS({
 
 // node_modules/side-channel-weakmap/index.js
 var require_side_channel_weakmap = __commonJS({
-  "node_modules/side-channel-weakmap/index.js"(exports, module) {
+  "node_modules/side-channel-weakmap/index.js"(exports2, module2) {
     "use strict";
     var GetIntrinsic = require_get_intrinsic();
     var callBound = require_call_bound();
@@ -14766,7 +14759,7 @@ var require_side_channel_weakmap = __commonJS({
     var $weakMapSet = callBound("WeakMap.prototype.set", true);
     var $weakMapHas = callBound("WeakMap.prototype.has", true);
     var $weakMapDelete = callBound("WeakMap.prototype.delete", true);
-    module.exports = $WeakMap ? (
+    module2.exports = $WeakMap ? (
       /** @type {Exclude<import('.'), false>} */
       function getSideChannelWeakMap() {
         var $wm;
@@ -14827,7 +14820,7 @@ var require_side_channel_weakmap = __commonJS({
 
 // node_modules/side-channel/index.js
 var require_side_channel = __commonJS({
-  "node_modules/side-channel/index.js"(exports, module) {
+  "node_modules/side-channel/index.js"(exports2, module2) {
     "use strict";
     var $TypeError = require_type();
     var inspect = require_object_inspect();
@@ -14835,7 +14828,7 @@ var require_side_channel = __commonJS({
     var getSideChannelMap = require_side_channel_map();
     var getSideChannelWeakMap = require_side_channel_weakmap();
     var makeChannel = getSideChannelWeakMap || getSideChannelMap || getSideChannelList;
-    module.exports = function getSideChannel() {
+    module2.exports = function getSideChannel() {
       var $channelData;
       var channel = {
         assert: function(key) {
@@ -14866,7 +14859,7 @@ var require_side_channel = __commonJS({
 
 // node_modules/qs/lib/formats.js
 var require_formats = __commonJS({
-  "node_modules/qs/lib/formats.js"(exports, module) {
+  "node_modules/qs/lib/formats.js"(exports2, module2) {
     "use strict";
     var replace = String.prototype.replace;
     var percentTwenties = /%20/g;
@@ -14874,7 +14867,7 @@ var require_formats = __commonJS({
       RFC1738: "RFC1738",
       RFC3986: "RFC3986"
     };
-    module.exports = {
+    module2.exports = {
       "default": Format.RFC3986,
       formatters: {
         RFC1738: function(value) {
@@ -14892,7 +14885,7 @@ var require_formats = __commonJS({
 
 // node_modules/qs/lib/utils.js
 var require_utils = __commonJS({
-  "node_modules/qs/lib/utils.js"(exports, module) {
+  "node_modules/qs/lib/utils.js"(exports2, module2) {
     "use strict";
     var formats = require_formats();
     var has = Object.prototype.hasOwnProperty;
@@ -15080,7 +15073,7 @@ var require_utils = __commonJS({
       }
       return fn(val);
     };
-    module.exports = {
+    module2.exports = {
       arrayToObject,
       assign,
       combine,
@@ -15097,7 +15090,7 @@ var require_utils = __commonJS({
 
 // node_modules/qs/lib/stringify.js
 var require_stringify = __commonJS({
-  "node_modules/qs/lib/stringify.js"(exports, module) {
+  "node_modules/qs/lib/stringify.js"(exports2, module2) {
     "use strict";
     var getSideChannel = require_side_channel();
     var utils = require_utils();
@@ -15312,7 +15305,7 @@ var require_stringify = __commonJS({
         strictNullHandling: typeof opts.strictNullHandling === "boolean" ? opts.strictNullHandling : defaults.strictNullHandling
       };
     };
-    module.exports = function(object, opts) {
+    module2.exports = function(object, opts) {
       var obj = object;
       var options = normalizeStringifyOptions(opts);
       var objKeys;
@@ -15380,7 +15373,7 @@ var require_stringify = __commonJS({
 
 // node_modules/qs/lib/parse.js
 var require_parse = __commonJS({
-  "node_modules/qs/lib/parse.js"(exports, module) {
+  "node_modules/qs/lib/parse.js"(exports2, module2) {
     "use strict";
     var utils = require_utils();
     var has = Object.prototype.hasOwnProperty;
@@ -15608,7 +15601,7 @@ var require_parse = __commonJS({
         throwOnLimitExceeded: typeof opts.throwOnLimitExceeded === "boolean" ? opts.throwOnLimitExceeded : false
       };
     };
-    module.exports = function(str, opts) {
+    module2.exports = function(str, opts) {
       var options = normalizeParseOptions(opts);
       if (str === "" || str === null || typeof str === "undefined") {
         return options.plainObjects ? { __proto__: null } : {};
@@ -15631,12 +15624,12 @@ var require_parse = __commonJS({
 
 // node_modules/qs/lib/index.js
 var require_lib = __commonJS({
-  "node_modules/qs/lib/index.js"(exports, module) {
+  "node_modules/qs/lib/index.js"(exports2, module2) {
     "use strict";
     var stringify = require_stringify();
     var parse = require_parse();
     var formats = require_formats();
-    module.exports = {
+    module2.exports = {
       formats,
       parse,
       stringify
@@ -15646,7 +15639,7 @@ var require_lib = __commonJS({
 
 // src/exceptions.js
 var require_exceptions = __commonJS({
-  "src/exceptions.js"(exports, module) {
+  "src/exceptions.js"(exports2, module2) {
     var Fr24SdkError = class extends Error {
       constructor(data) {
         super(data);
@@ -15673,7 +15666,7 @@ var require_exceptions = __commonJS({
     };
     var PaymentRequiredError = class extends RateLimitError {
     };
-    module.exports = {
+    module2.exports = {
       Fr24SdkError,
       TransportError,
       ApiError,
@@ -15688,7 +15681,7 @@ var require_exceptions = __commonJS({
 
 // src/transport.js
 var require_transport = __commonJS({
-  "src/transport.js"(exports, module) {
+  "src/transport.js"(exports2, module2) {
     var axios = require_axios();
     var qs = require_lib();
     var {
@@ -15754,13 +15747,13 @@ var require_transport = __commonJS({
         throw new TransportError(err.message);
       }
     };
-    module.exports = HttpTransport;
+    module2.exports = HttpTransport;
   }
 });
 
 // src/models/airline.js
 var require_airline = __commonJS({
-  "src/models/airline.js"(exports, module) {
+  "src/models/airline.js"(exports2, module2) {
     var AirlineLight = class {
       constructor({ name, icao, iata }) {
         this.name = name;
@@ -15768,13 +15761,13 @@ var require_airline = __commonJS({
         this.iata = iata || null;
       }
     };
-    module.exports = AirlineLight;
+    module2.exports = AirlineLight;
   }
 });
 
 // src/validation/validationUtils.js
 var require_validationUtils = __commonJS({
-  "src/validation/validationUtils.js"(exports, module) {
+  "src/validation/validationUtils.js"(exports2, module2) {
     var ValidationUtils = class {
       static RADAR_CODE_REGEXP = /^[A-Z0-9-]{5,10}$/i;
       static REGISTRATION_REGEXP = /^(?:[A-Z0-9-]{2,12}|\*[A-Z0-9-]{1,11}|[A-Z0-9-]{1,11}\*)$/i;
@@ -15852,13 +15845,13 @@ var require_validationUtils = __commonJS({
         return inRange(lower) && inRange(upper) && lower <= upper;
       }
     };
-    module.exports = ValidationUtils;
+    module2.exports = ValidationUtils;
   }
 });
 
 // src/validation/AirlineParamsValidator.js
 var require_AirlineParamsValidator = __commonJS({
-  "src/validation/AirlineParamsValidator.js"(exports, module) {
+  "src/validation/AirlineParamsValidator.js"(exports2, module2) {
     var ValidationUtils = require_validationUtils();
     var AirlineParamsValidator = class {
       static validate(code) {
@@ -15877,13 +15870,13 @@ var require_AirlineParamsValidator = __commonJS({
         }
       }
     };
-    module.exports = AirlineParamsValidator;
+    module2.exports = AirlineParamsValidator;
   }
 });
 
 // src/resources/airlines.js
 var require_airlines = __commonJS({
-  "src/resources/airlines.js"(exports, module) {
+  "src/resources/airlines.js"(exports2, module2) {
     var AirlineLight = require_airline();
     var AirlineParamsValidator = require_AirlineParamsValidator();
     var AirlinesResource = class {
@@ -15896,13 +15889,13 @@ var require_airlines = __commonJS({
         return new AirlineLight(data);
       }
     };
-    module.exports = AirlinesResource;
+    module2.exports = AirlinesResource;
   }
 });
 
 // src/models/airport.js
 var require_airport = __commonJS({
-  "src/models/airport.js"(exports, module) {
+  "src/models/airport.js"(exports2, module2) {
     var Timezone = class {
       constructor({ name, offset }) {
         this.name = name;
@@ -15929,13 +15922,13 @@ var require_airport = __commonJS({
         this.state = state || null;
       }
     };
-    module.exports = { Timezone, Country, AirportFull };
+    module2.exports = { Timezone, Country, AirportFull };
   }
 });
 
 // src/validation/AirportParamsValidator.js
 var require_AirportParamsValidator = __commonJS({
-  "src/validation/AirportParamsValidator.js"(exports, module) {
+  "src/validation/AirportParamsValidator.js"(exports2, module2) {
     var ValidationUtils = require_validationUtils();
     var AirportParamsValidator = class {
       static validate(code) {
@@ -15954,13 +15947,13 @@ var require_AirportParamsValidator = __commonJS({
         }
       }
     };
-    module.exports = AirportParamsValidator;
+    module2.exports = AirportParamsValidator;
   }
 });
 
 // src/resources/airports.js
 var require_airports = __commonJS({
-  "src/resources/airports.js"(exports, module) {
+  "src/resources/airports.js"(exports2, module2) {
     var { AirportFull } = require_airport();
     var AirportParamsValidator = require_AirportParamsValidator();
     var AirportsResource = class {
@@ -15977,13 +15970,13 @@ var require_airports = __commonJS({
         return new AirportFull(data);
       }
     };
-    module.exports = AirportsResource;
+    module2.exports = AirportsResource;
   }
 });
 
 // src/models/flight.js
 var require_flight = __commonJS({
-  "src/models/flight.js"(exports, module) {
+  "src/models/flight.js"(exports2, module2) {
     var FlightPositions = class {
       constructor(data) {
         Object.assign(this, data);
@@ -16010,13 +16003,13 @@ var require_flight = __commonJS({
         this.recordCount = record_count;
       }
     };
-    module.exports = { FlightPositions, FlightTrackPoint, FlightTracks, FlightTracksResponse, CountResponse };
+    module2.exports = { FlightPositions, FlightTrackPoint, FlightTracks, FlightTracksResponse, CountResponse };
   }
 });
 
 // src/helpers/params.js
 var require_params = __commonJS({
-  "src/helpers/params.js"(exports, module) {
+  "src/helpers/params.js"(exports2, module2) {
     var ValidationUtils = require_validationUtils();
     var splitList = (str) => str.split(",").map((s) => s.trim()).filter(Boolean);
     var normalizeListParam = (key, value, { maxLen, maxItems, allowArray = false, emptyMessage }) => {
@@ -16077,13 +16070,13 @@ var require_params = __commonJS({
         });
       }
     };
-    module.exports = { normalizeListParam, listField, splitList };
+    module2.exports = { normalizeListParam, listField, splitList };
   }
 });
 
 // src/validation/FlightSummaryParamsValidator.js
 var require_FlightSummaryParamsValidator = __commonJS({
-  "src/validation/FlightSummaryParamsValidator.js"(exports, module) {
+  "src/validation/FlightSummaryParamsValidator.js"(exports2, module2) {
     var ValidationUtils = require_validationUtils();
     var { listField } = require_params();
     var FlightSummaryValidator = class {
@@ -16153,13 +16146,13 @@ var require_FlightSummaryParamsValidator = __commonJS({
         }
       }
     };
-    module.exports = FlightSummaryValidator;
+    module2.exports = FlightSummaryValidator;
   }
 });
 
 // src/resources/flightSummary.js
 var require_flightSummary = __commonJS({
-  "src/resources/flightSummary.js"(exports, module) {
+  "src/resources/flightSummary.js"(exports2, module2) {
     var { CountResponse } = require_flight();
     var FlightSummaryParamsValidator = require_FlightSummaryParamsValidator();
     var FlightSummaryResource = class {
@@ -16180,13 +16173,13 @@ var require_flightSummary = __commonJS({
         return new CountResponse(data);
       }
     };
-    module.exports = FlightSummaryResource;
+    module2.exports = FlightSummaryResource;
   }
 });
 
 // src/resources/flightTracks.js
 var require_flightTracks = __commonJS({
-  "src/resources/flightTracks.js"(exports, module) {
+  "src/resources/flightTracks.js"(exports2, module2) {
     var { FlightTracksResponse } = require_flight();
     var FlightTracksResource = class {
       constructor(transport) {
@@ -16198,13 +16191,13 @@ var require_flightTracks = __commonJS({
         return new FlightTracksResponse(data);
       }
     };
-    module.exports = FlightTracksResource;
+    module2.exports = FlightTracksResource;
   }
 });
 
 // src/models/usage.js
 var require_usage = __commonJS({
-  "src/models/usage.js"(exports, module) {
+  "src/models/usage.js"(exports2, module2) {
     var UsageLogSummary = class {
       constructor({ endpoint, request_count, credits }) {
         this.endpoint = endpoint;
@@ -16217,13 +16210,13 @@ var require_usage = __commonJS({
         this.data = (data || []).map((item) => new UsageLogSummary(item));
       }
     };
-    module.exports = { UsageLogSummary, UsageLogSummaryResponse };
+    module2.exports = { UsageLogSummary, UsageLogSummaryResponse };
   }
 });
 
 // src/resources/usage.js
 var require_usage2 = __commonJS({
-  "src/resources/usage.js"(exports, module) {
+  "src/resources/usage.js"(exports2, module2) {
     var { UsageLogSummaryResponse } = require_usage();
     var UsageResource = class {
       constructor(transport) {
@@ -16235,13 +16228,13 @@ var require_usage2 = __commonJS({
         return new UsageLogSummaryResponse(data);
       }
     };
-    module.exports = UsageResource;
+    module2.exports = UsageResource;
   }
 });
 
 // src/validation/FlightParamsValidator.js
 var require_FlightParamsValidator = __commonJS({
-  "src/validation/FlightParamsValidator.js"(exports, module) {
+  "src/validation/FlightParamsValidator.js"(exports2, module2) {
     var ValidationUtils = require_validationUtils();
     var { normalizeListParam, listField } = require_params();
     var FlightParamsValidator = class {
@@ -16357,13 +16350,13 @@ var require_FlightParamsValidator = __commonJS({
         }
       }
     };
-    module.exports = FlightParamsValidator;
+    module2.exports = FlightParamsValidator;
   }
 });
 
 // src/resources/live/positions.js
 var require_positions = __commonJS({
-  "src/resources/live/positions.js"(exports, module) {
+  "src/resources/live/positions.js"(exports2, module2) {
     var { FlightPositions } = require_flight();
     var FlightParamsValidator = require_FlightParamsValidator();
     var LiveResource = class {
@@ -16387,13 +16380,13 @@ var require_positions = __commonJS({
         return new CountResponse(data);
       }
     };
-    module.exports = LiveResource;
+    module2.exports = LiveResource;
   }
 });
 
 // src/resources/historic/positions.js
 var require_positions2 = __commonJS({
-  "src/resources/historic/positions.js"(exports, module) {
+  "src/resources/historic/positions.js"(exports2, module2) {
     var { FlightPositions, CountResponse } = require_flight();
     var FlightParamsValidator = require_FlightParamsValidator();
     var HistoricResource = class {
@@ -16416,13 +16409,13 @@ var require_positions2 = __commonJS({
         return new CountResponse(data);
       }
     };
-    module.exports = HistoricResource;
+    module2.exports = HistoricResource;
   }
 });
 
 // src/resources/index.js
 var require_resources = __commonJS({
-  "src/resources/index.js"(exports, module) {
+  "src/resources/index.js"(exports2, module2) {
     var AirlinesResource = require_airlines();
     var AirportsResource = require_airports();
     var FlightSummaryResource = require_flightSummary();
@@ -16430,7 +16423,7 @@ var require_resources = __commonJS({
     var UsageResource = require_usage2();
     var LiveResource = require_positions();
     var HistoricResource = require_positions2();
-    module.exports = {
+    module2.exports = {
       AirlinesResource,
       AirportsResource,
       FlightSummaryResource,
@@ -16444,7 +16437,7 @@ var require_resources = __commonJS({
 
 // src/client.js
 var require_client = __commonJS({
-  "src/client.js"(exports, module) {
+  "src/client.js"(exports2, module2) {
     var HttpTransport = require_transport();
     var {
       AirlinesResource,
@@ -16456,7 +16449,7 @@ var require_client = __commonJS({
       HistoricResource
     } = require_resources();
     var { Fr24SdkError, AuthenticationError, ApiError } = require_exceptions();
-    var Client = class {
+    var Client2 = class {
       constructor({ apiToken, apiVersion, timeout, httpClient } = {}) {
         const config = {};
         if (apiToken) config.apiToken = apiToken;
@@ -16481,18 +16474,13 @@ var require_client = __commonJS({
         return this._transport;
       }
     };
-    module.exports = Client;
+    module2.exports = Client2;
   }
 });
 
 // src/index.js
-var require_src = __commonJS({
-  "src/index.js"(exports, module) {
-    var Client = require_client();
-    module.exports = Client;
-  }
-});
-export default require_src();
+var Client = require_client();
+module.exports = Client;
 /*! Bundled license information:
 
 mime-db/index.js:

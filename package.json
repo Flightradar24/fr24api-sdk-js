@@ -1,16 +1,33 @@
 {
   "name": "fr24api-sdk-js",
   "version": "1.0.0",
-  "description": "Node.js SDK for Flightradar24 API translated from Python",
-  "main": "src/fr24sdk/index.js",
-  "scripts": {
-    "test": "echo \"No tests specified\" && exit 0"
-  },
+  "description": "Node.js SDK for Flightradar24 API",
   "author": "",
   "license": "MIT",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup src/index.js --format cjs,esm --out-dir dist --clean",
+    "prepublishOnly": "npm run build",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
   "dependencies": {
     "axios": "^1.4.0",
     "dotenv": "^16.5.0",
     "qs": "^6.11.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2"
   }
 }

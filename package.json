@@ -21,6 +21,7 @@
     "build": "npm run build:cjs && npm run build:esm",
     "build:cjs": "esbuild src/index.js --platform=node --bundle --format=cjs --outfile=dist/index.cjs",
     "build:esm": "esbuild src/index.js --platform=node --bundle --format=esm --outfile=dist/index.mjs --banner:js=\"import { createRequire } from 'module'; const require = createRequire(import.meta.url);\"",
+    "test": "node --test",
     "prepublishOnly": "npm run build"
   },
 

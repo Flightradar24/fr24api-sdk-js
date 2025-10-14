@@ -40,19 +40,33 @@ class FlightSummaryValidator {
         }
       }
     }
-    if (flight_ids != null) listField('flight ids', flight_ids, null, 200, null, 'Flight ID', { allowArray: true });
-    if (flights != null) listField('flights', flights, null, 200, ValidationUtils.isIataFlightNumber, 'Flight', { allowArray: true });
-    if (callsigns != null) listField('callsigns', callsigns, nul, 200, ValidationUtils.isCallsign, 'Callsign', { allowArray: true });
+    if (flight_ids != null) listField('flight ids', flight_ids, null, 200, null, 'Flight ID', { allowArray: true }, errors);
+    if (flights != null)
+      listField('flights', flights, null, 200, ValidationUtils.isIataFlightNumber, 'Flight', { allowArray: true }, errors);
+    if (callsigns != null)
+      listField('callsigns', callsigns, null, 200, ValidationUtils.isCallsign, 'Callsign', { allowArray: true }, errors);
     if (registrations != null)
-      listField('registrations', registrations, null, 200, ValidationUtils.isRegistration, 'registration', { allowArray: true });
+      listField(
+        'registrations',
+        registrations,
+        null,
+        200,
+        ValidationUtils.isRegistration,
+        'registration',
+        { allowArray: true },
+        errors
+      );
     ['operating_as', 'painted_as'].forEach((key) => {
       const val = params[key];
-      if (val != null) listField(key, val, null, 200, ValidationUtils.isAirlineIcao, 'airline ICAO code', { allowArray: true });
+      if (val != null)
+        listField(key, val, null, 200, ValidationUtils.isAirlineIcao, 'airline ICAO code', { allowArray: true }, errors);
     });
-    if (airports != null) listField('airports', airports, 0, 200, ValidationUtils.isAirportParam, 'airport', { allowArray: true });
-    if (routes != null) listField('routes', routes, 0, 200, ValidationUtils.isRoute, 'route', { allowArray: true });
+    if (airports != null)
+      listField('airports', airports, 0, 200, ValidationUtils.isAirportParam, 'airport', { allowArray: true }, errors);
+    if (routes != null)
+      listField('routes', routes, 0, 200, ValidationUtils.isRoute, 'route', { allowArray: true }, errors);
     if (aircraft != null) {
-      listField('aircraft', aircraft, 0, 200, ValidationUtils.isRoute, 'aircraft', { allowArray: true });
+      listField('aircraft', aircraft, 0, 200, ValidationUtils.isRoute, 'aircraft', { allowArray: true }, errors);
     }
     if (sort != null) {
       if (typeof sort !== 'string' || !['asc', 'desc'].includes(sort.toLowerCase())) {

@@ -18,6 +18,12 @@ describe('ValidationUtils', () => {
     assert.equal(ValidationUtils.isRegistration('!ABC'), false);
   });
 
+  it('validates FR24 ids', () => {
+    assert.equal(ValidationUtils.isFr24Id('2efc4160'), true);
+    assert.equal(ValidationUtils.isFr24Id('35F2FFD9'), true);
+    assert.equal(ValidationUtils.isFr24Id('XYZ12345'), false);
+  });
+
   it('validates callsigns', () => {
     assert.equal(ValidationUtils.isCallsign('DAL123'), true);
     assert.equal(ValidationUtils.isCallsign('A*123'), false);
@@ -82,6 +88,12 @@ describe('ValidationUtils', () => {
   it('validates data sources', () => {
     assert.equal(ValidationUtils.isDataSource('ADSB'), true);
     assert.equal(ValidationUtils.isDataSource('RADAR'), false);
+  });
+
+  it('validates historic event types', () => {
+    assert.equal(ValidationUtils.isHistoricEventType('takeoff'), true);
+    assert.equal(ValidationUtils.isHistoricEventType('LANDED'), true);
+    assert.equal(ValidationUtils.isHistoricEventType('unknown'), false);
   });
 
   it('validates altitude ranges', () => {

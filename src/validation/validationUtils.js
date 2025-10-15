@@ -1,6 +1,7 @@
 class ValidationUtils {
   static RADAR_CODE_REGEXP = /^[A-Z0-9-]{5,10}$/i;
   static REGISTRATION_REGEXP = /^(?:[A-Z0-9-]{2,12}|\*[A-Z0-9-]{1,11}|[A-Z0-9-]{1,11}\*)$/i;
+  static FR24_ID_REGEXP = /^[A-F0-9]{8}$/i;
   static CALLSIGN_REGEXP = /^(?:[A-Z0-9-]{3,8}|\*[A-Z0-9-]{3,7}|[A-Z0-9-]{3,7}\*)$/i;
   static FLIGHT_NUMBER_REGEXP = /^[A-Z]{2}[0-9]{1,4}[A-Z]?$|^[A-Z]{3}[0-9]{1,4}[A-Z]?$/i;
   static IATA_FLIGHT_NUMBER_REGEXP = /([A-Z]\d|\d[A-Z]|[A-Z]{2})(\d{1,})/i;
@@ -14,6 +15,16 @@ class ValidationUtils {
   static ROUTE_REGEXP = /^[A-Z]{2,4}-[A-Z]{2,4}(?:,(?:\s)*[A-Z]{2,4}-[A-Z]{2,4})*$/i;
   static SERVICE_TYPES_REGEXP = /^[PCMJTHBGDVON]$/i;
   static DATA_SOURCE_REGEXP = /^(ADSB|MLAT|ESTIMATED)$/i;
+  static HISTORIC_EVENT_TYPES = new Set([
+    'all',
+    'gate_departure',
+    'takeoff',
+    'cruising',
+    'airspace_transition',
+    'descent',
+    'landed',
+    'gate_arrival',
+  ]);
 
   static test(pattern, input) {
     return pattern instanceof RegExp && typeof input === 'string' && input.trim() !== '' && pattern.test(input);
@@ -25,6 +36,10 @@ class ValidationUtils {
 
   static isRegistration(val) {
     return this.test(this.REGISTRATION_REGEXP, val);
+  }
+
+  static isFr24Id(val) {
+    return this.test(this.FR24_ID_REGEXP, val);
   }
 
   static isCallsign(val) {
@@ -73,6 +88,10 @@ class ValidationUtils {
 
   static isDataSource(val) {
     return this.test(this.DATA_SOURCE_REGEXP, val);
+  }
+
+  static isHistoricEventType(val) {
+    return typeof val === 'string' && this.HISTORIC_EVENT_TYPES.has(val.toLowerCase());
   }
 
   static isAltitudeRange(val) {

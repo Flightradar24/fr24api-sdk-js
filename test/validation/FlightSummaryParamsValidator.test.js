@@ -18,7 +18,7 @@ describe('FlightSummaryParamsValidator', () => {
     expectValidationError(() => FlightSummaryParamsValidator.validate({}), /Either 'flight_ids' or both/);
   });
 
-  it('requires both datetime endpoints together when used', () => {
+  it('requires both datetime params together when used', () => {
     expectValidationError(
       () => FlightSummaryParamsValidator.validate({ flight_datetime_from: '2023-01-01T00:00:00Z' }),
       /'flight_datetime_to' is required/
@@ -75,7 +75,10 @@ describe('FlightSummaryParamsValidator', () => {
       () => FlightSummaryParamsValidator.validate({ operating_as: ['AA', 10], flight_ids: '1' }),
       /'operating_as' array items must be strings/
     );
-    expectValidationError(() => FlightSummaryParamsValidator.validate({ airports: '123', flight_ids: '1' }), /'airports' contains invalid airport/);
+    expectValidationError(
+      () => FlightSummaryParamsValidator.validate({ airports: '123', flight_ids: '1' }),
+      /'airports' contains invalid airport/
+    );
   });
 
   it('validates sort direction', () => {

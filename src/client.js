@@ -7,6 +7,7 @@ const {
   UsageResource,
   LiveResource,
   HistoricResource,
+  HistoricEventsResource,
 } = require('./resources');
 const { Fr24SdkError, AuthenticationError, ApiError } = require('./exceptions');
 
@@ -27,6 +28,7 @@ class Client {
     this.usage = new UsageResource(this._transport);
     this.live = new LiveResource(this._transport);
     this.historic = new HistoricResource(this._transport);
+    this.historicEvents = new HistoricEventsResource(this._transport);
   }
 
   close() {

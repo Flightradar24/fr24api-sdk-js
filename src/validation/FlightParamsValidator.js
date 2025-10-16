@@ -46,49 +46,54 @@ class FlightParamsValidator {
 
     // flights (IATA flight number)
     if (flights != null) {
-      listField('flights', flights, null, 200, ValidationUtils.isIataFlightNumber, 'IATA flight number', { allowArray: true });
+      listField('flights', flights, null, 200, ValidationUtils.isIataFlightNumber, 'IATA flight number', { allowArray: true }, errors);
     }
 
     // callsigns
     if (callsigns != null) {
-      listField('callsigns', callsigns, null, 200, ValidationUtils.isCallsign, 'callsign', { allowArray: true });
+      listField('callsigns', callsigns, null, 200, ValidationUtils.isCallsign, 'callsign', { allowArray: true }, errors);
     }
 
     // registrations
     if (registrations != null) {
-      listField('registrations', registrations, null, 200, ValidationUtils.isRegistration, 'registration', { allowArray: true });
+      listField('registrations', registrations, null, 200, ValidationUtils.isRegistration, 'registration', { allowArray: true }, errors);
     }
 
     // operating_as & painted_as
     ['operating_as', 'painted_as'].forEach((key) => {
       const val = params[key];
       if (val != null) {
-        listField(key, val, null, 200, ValidationUtils.isAirlineIcao, 'airline ICAO code', { allowArray: true });
+        listField(key, val, null, 200, ValidationUtils.isAirlineIcao, 'airline ICAO code', { allowArray: true }, errors);
       }
     });
 
     // airports
     if (airports != null) {
-      listField('airports', airports, 0, 200, ValidationUtils.isAirportParam, 'airport', { allowArray: true });
+      listField('airports', airports, 0, 200, ValidationUtils.isAirportParam, 'airport', { allowArray: true }, errors);
     }
 
     // routes (comma-separated)
     if (routes != null) {
-      listField('routes', routes, 0, 200, ValidationUtils.isRoute, 'route', { allowArray: true });
+      listField('routes', routes, 0, 200, ValidationUtils.isRoute, 'route', { allowArray: true }, errors);
     }
 
     // aircraft
     if (aircraft != null) {
-      listField('aircraft', aircraft, 0, 200, ValidationUtils.isRoute, 'aircraft', { allowArray: true });
+      listField('aircraft', aircraft, 0, 200, ValidationUtils.isRoute, 'aircraft', { allowArray: true }, errors);
     }
 
     // altitude_ranges
     if (altitude_ranges != null) {
-      const ranges = normalizeListParam('altitude_ranges', altitude_ranges, {
-        maxLen: 200,
-        allowArray: true,
-        emptyMessage: "'altitude_ranges' must contain at least one range.",
-      });
+      const ranges = normalizeListParam(
+        'altitude_ranges',
+        altitude_ranges,
+        {
+          maxLen: 200,
+          allowArray: true,
+          emptyMessage: "'altitude_ranges' must contain at least one range.",
+        },
+        errors
+      );
       if (ranges) {
         ranges.forEach((range) => {
           if (!ValidationUtils.isAltitudeRange(range)) {
@@ -102,27 +107,32 @@ class FlightParamsValidator {
 
     // squawks
     if (squawks != null) {
-      listField('squawks', squawks, 0, 200, ValidationUtils.isSquawk, 'squawk code', { allowArray: true });
+      listField('squawks', squawks, 0, 200, ValidationUtils.isSquawk, 'squawk code', { allowArray: true }, errors);
     }
 
     // categories
     if (categories != null) {
-      listField('categories', categories, 0, 200, ValidationUtils.isServiceType, 'category', { allowArray: true });
+      listField('categories', categories, 0, 200, ValidationUtils.isServiceType, 'category', { allowArray: true }, errors);
     }
 
     // data_sources
     if (data_sources != null) {
-      listField('data sources', data_sources, 0, 200, ValidationUtils.isDataSource, 'data source', { allowArray: true });
+      listField('data sources', data_sources, 0, 200, ValidationUtils.isDataSource, 'data source', { allowArray: true }, errors);
     }
 
     // airspaces
     if (airspaces != null) {
-      normalizeListParam('airspaces', airspaces, {
-        maxLen: null,
-        maxItems: 200,
-        allowArray: true,
-        emptyMessage: "'airspaces' must contain at least one range.",
-      });
+      normalizeListParam(
+        'airspaces',
+        airspaces,
+        {
+          maxLen: null,
+          maxItems: 200,
+          allowArray: true,
+          emptyMessage: "'airspaces' must contain at least one range.",
+        },
+        errors
+      );
     }
 
     // gspeed

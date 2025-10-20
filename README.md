@@ -15,7 +15,7 @@ Node.js SDK for the [Flightradar24 API](https://fr24api.flightradar24.com).
 ### Release Version (Recommended for Users)
 
 ```bash
-npm install flightradar24/fr24sdk
+npm install @flightradar24/fr24sdk
 ```
 
 ### Development Version (Recommended for Contributors)

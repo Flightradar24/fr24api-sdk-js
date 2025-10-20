@@ -1,9 +1,14 @@
 {
   "name": "fr24api-sdk-js",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Node.js SDK for Flightradar24 API",
-  "author": "",
+  "author": "Flightradar24",
   "license": "MIT",
+  "homepage": "https://fr24api.flightradar24.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Flightradar24/fr24api-sdk-js.git"
+  },
 
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",

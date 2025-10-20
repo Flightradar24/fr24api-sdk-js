@@ -1,7 +1,7 @@
 {
-  "name": "fr24api-sdk-js",
+  "name": "@flightradar24/fr24api",
   "version": "0.1.0",
-  "description": "Node.js SDK for Flightradar24 API",
+  "description": "Official node.js SDK for Flightradar24 API",
   "author": "Flightradar24",
   "license": "MIT",
   "homepage": "https://fr24api.flightradar24.com",

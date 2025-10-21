@@ -37,7 +37,7 @@ The `Client` class is your main entry point to the API.
 
 **Using environment variable (recommended):**
 
-Create a `.env` file in your project root and add your API token:
+Make sure you have dotenv installed, then create a `.env` file in your project root and add your API token:
 
 ```
 FR24_API_TOKEN=your_api_token_here
@@ -47,9 +47,20 @@ Then, initialize the client:
 
 ```js
 require('dotenv').config();
-const Client = require('./src/client');
+const SDK = require('@flightradar24/fr24sdk');
 
-const client = new Client({
+const client = new SDK.Client({
+  apiToken: process.env.FR24_API_TOKEN,
+  apiVersion: 'v1', // optional, defaults to 'v1'
+});
+```
+
+You can also use ESM
+
+```js
+import SDK from '@flightradar24/fr24sdk';
+
+const client = new SDK.Client({
   apiToken: process.env.FR24_API_TOKEN,
   apiVersion: 'v1', // optional, defaults to 'v1'
 });
@@ -77,9 +88,9 @@ This example demonstrates fetching detailed information for an airport (e.g., Wa
 
 ```js
 require('dotenv').config();
-const Client = require('./src/client');
+const SDK = require('@flightradar24/fr24sdk');
 
-const client = new Client({
+const client = new SDK.Client({
   apiToken: process.env.FR24_API_TOKEN,
   apiVersion: 'v1',
 });
@@ -128,10 +139,10 @@ The SDK uses custom exceptions to indicate errors. The base exception is `Fr24Sd
 Example error handling:
 
 ```js
-const Client = require('./src/client');
+const SDK = require('@flightradar24/fr24sdk');
 const { ApiError, AuthenticationError, Fr24SdkError } = require('./src/exceptions');
 
-const client = new Client({ apiToken: process.env.FR24_API_TOKEN });
+const client = new SDK.Client({ apiToken: process.env.FR24_API_TOKEN });
 
 (async () => {
   try {
@@ -155,14 +166,6 @@ const client = new Client({ apiToken: process.env.FR24_API_TOKEN });
     client.close();
   }
 })();
-```
-
-### 6. Closing the Client
-
-Call `client.close()` when you are done to release resources (no-op for HTTP transport, but included for future compatibility):
-
-```js
-client.close();
 ```
 
 ## Contributing
